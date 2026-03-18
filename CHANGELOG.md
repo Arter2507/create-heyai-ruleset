@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/Arter2507/create-heyai-ruleset/compare/v1.1.0...v1.1.1) (2026-03-18)
+
+
+### Bug Fixes
+
+* finalize scoped package metadata and documentation ([c193a0f](https://github.com/Arter2507/create-heyai-ruleset/commit/c193a0fa0cfdbc6f4b7bfe0fa5324ec2c146b7a8))
+
 # [1.1.0](https://github.com/Arter2507/create-heyai-ruleset/compare/v1.0.1...v1.1.0) (2026-03-18)
 
 
