@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Scaffold and install HEYAI ruleset into a project.",
   "bin": {
-    "create-heyai-ruleset": "./index.js"
+    "create-heyai-ruleset": "index.js"
   },
   "type": "commonjs",
   "scripts": {
