@@ -234,6 +234,10 @@ function extractModeDefaults(systemDesignText) {
 const KIT_INSTALL_COMMANDS = {
   "Dokhacgiakhoa/antigravity-ide": "npx antigravity-ide@latest",
 };
+const KIT_INSTALL_MARKERS = {
+  "Dokhacgiakhoa/antigravity-ide": [".agent", "GEMINI.md", "docs"],
+  "vudovn/antigravity-kit": [".agent"],
+};
 
 function extractRepoSlug(url) {
   const match = url.match(/^https?:\/\/github\.com\/([^/\s]+)\/([^/\s#?]+)/i);
@@ -285,12 +289,55 @@ async function inferInstallCommandFromReadme(url) {
   return "";
 }
 
-function runCommand(command, cwd) {
+function runCommand(command, cwd, interactiveMode) {
   return spawnSync(command, {
     cwd,
     shell: true,
     encoding: "utf8",
+    stdio: interactiveMode ? "inherit" : "pipe",
   });
+}
+
+function getProjectSnapshot(rootDir) {
+  const snapshot = new Set();
+  function walk(currentPath, relativeBase = "") {
+    const entries = fs.readdirSync(currentPath, { withFileTypes: true });
+    for (const entry of entries) {
+      const rel = relativeBase
+        ? `${relativeBase}/${entry.name}`
+        : entry.name;
+      snapshot.add(rel);
+      if (entry.isDirectory()) {
+        walk(path.join(currentPath, entry.name), rel);
+      }
+    }
+  }
+  try {
+    walk(rootDir, "");
+  } catch {
+    return snapshot;
+  }
+  return snapshot;
+}
+
+function hasSnapshotChanged(before, after) {
+  if (before.size !== after.size) {
+    return true;
+  }
+  for (const item of before) {
+    if (!after.has(item)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function hasExpectedMarker(rootDir, repoSlug) {
+  const markers = KIT_INSTALL_MARKERS[repoSlug];
+  if (!markers || markers.length === 0) {
+    return false;
+  }
+  return markers.some((marker) => fs.existsSync(path.join(rootDir, marker)));
 }
 
 function parseGithubLinksCommaSeparated(input) {
@@ -730,9 +777,25 @@ async function main() {
           continue;
         }
 
-        const run = runCommand(installCommand, targetRoot);
-        if (run.status === 0) {
-          installReport.push(`[OK] ${target.url}\nCommand: ${installCommand}`);
+        const repoSlug = extractRepoSlug(target.url);
+        const beforeSnapshot = getProjectSnapshot(targetRoot);
+        const run = runCommand(installCommand, targetRoot, interactiveMode);
+        const afterSnapshot = getProjectSnapshot(targetRoot);
+        const changed = hasSnapshotChanged(beforeSnapshot, afterSnapshot);
+        const markerFound = hasExpectedMarker(targetRoot, repoSlug);
+
+        if (run.status === 0 && (changed || markerFound)) {
+          installReport.push(
+            `[OK] ${target.url}\nCommand: ${installCommand}\nDetected project changes: ${changed}\nDetected marker: ${markerFound}`,
+          );
+          continue;
+        }
+
+        if (run.status === 0 && !changed && !markerFound) {
+          installReport.push(
+            `[WARN] ${target.url}\nCommand: ${installCommand}\nCommand finished but no project changes were detected. Installation likely not completed (interactive wizard may have been cancelled).`,
+          );
+          logWarn(`Khong thay doi du an sau khi chay kit: ${target.url}`);
           continue;
         }
 
