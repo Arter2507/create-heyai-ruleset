@@ -127,5 +127,6 @@ Xem checklist: [RELEASE.md](./RELEASE.md)
 
 ## Auto publish
 
-- Workflow `Publish npm (main)` sẽ tự publish khi push `main` nếu version trong `package.json` chưa tồn tại trên npm.
-- Cần cấu hình `NPM_TOKEN` trong GitHub repo secrets.
+- Chỉ dùng **1 kênh publish**: workflow `Publish npm` khi push tag `v*` (ví dụ `v0.1.3`).
+- Workflow ưu tiên xác thực bằng **GitHub OIDC (npm trusted publishing)**.
+- Nếu OIDC chưa được cấu hình trên npm, workflow fallback sang `NPM_TOKEN` (nếu có trong repo secrets).
