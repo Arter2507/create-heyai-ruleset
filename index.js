@@ -158,7 +158,7 @@ function printUsage() {
     "  --dark-color <text>           Darkmode color text",
     "  --dark-theme <text>           Darkmode theme text",
     "  --agent-name <name>           Agent name (default: AI)",
-    "  --agent-config-path <path>    Path to HEYAI.agent.md (outside root)",
+    "  --agent-config-path <path>    Optional explicit path (must be project-root/HEYAI.agent.md)",
     "  --overwrite-agent-config      Overwrite agent config file if exists",
     "  -h, --help                    Show help"
   ];
@@ -196,7 +196,18 @@ function extractDefaultKits(systemDesignText) {
     while ((m = linkRegex.exec(line)) !== null) {
       links.push({ label: m[1], url: m[2] });
     }
-    kits.push({ title, links, raw: line });
+    if (links.length <= 1) {
+      kits.push({ title, links, raw: line });
+      continue;
+    }
+
+    for (const link of links) {
+      kits.push({
+        title: `${title} - ${link.label}`,
+        links: [link],
+        raw: line
+      });
+    }
   }
   return kits;
 }
@@ -218,13 +229,66 @@ function extractModeDefaults(systemDesignText) {
   };
 }
 
-function sanitizeRepoSlug(url) {
-  return url
-    .replace(/^https?:\/\//, "")
-    .replace(/^github\.com\//, "")
-    .replace(/\.git$/i, "")
-    .replace(/[^\w.-]+/g, "-")
-    .replace(/^-+|-+$/g, "");
+const KIT_INSTALL_COMMANDS = {
+  "Dokhacgiakhoa/antigravity-ide": "npx antigravity-ide@latest"
+};
+
+function extractRepoSlug(url) {
+  const match = url.match(/^https?:\/\/github\.com\/([^/\s]+)\/([^/\s#?]+)/i);
+  if (!match) {
+    return "";
+  }
+  return `${match[1]}/${match[2].replace(/\.git$/i, "")}`;
+}
+
+async function inferInstallCommandFromReadme(url) {
+  const slug = extractRepoSlug(url);
+  if (!slug) {
+    return "";
+  }
+
+  if (KIT_INSTALL_COMMANDS[slug]) {
+    return KIT_INSTALL_COMMANDS[slug];
+  }
+
+  const candidates = [
+    `https://raw.githubusercontent.com/${slug}/HEAD/README.md`,
+    `https://raw.githubusercontent.com/${slug}/main/README.md`,
+    `https://raw.githubusercontent.com/${slug}/master/README.md`
+  ];
+
+  for (const candidate of candidates) {
+    try {
+      const response = await fetch(candidate);
+      if (!response.ok) {
+        continue;
+      }
+      const text = await response.text();
+      const lines = text.split(/\r?\n/).map((line) => line.trim());
+      const command = lines.find(
+        (line) =>
+          /^npx\s+/i.test(line) ||
+          /^pnpm\s+dlx\s+/i.test(line) ||
+          /^pnpm\s+create\s+/i.test(line) ||
+          /^npm\s+create\s+/i.test(line)
+      );
+      if (command) {
+        return command;
+      }
+    } catch {
+      continue;
+    }
+  }
+
+  return "";
+}
+
+function runCommand(command, cwd) {
+  return spawnSync(command, {
+    cwd,
+    shell: true,
+    encoding: "utf8"
+  });
 }
 
 function parseGithubLinksCommaSeparated(input) {
@@ -271,16 +335,8 @@ function updateManagedBlock(systemDesignText, content) {
   return `${systemDesignText.trimEnd()}\n\n---\n\n${block}\n`;
 }
 
-function pathIsOutside(baseDir, maybePath) {
-  const relative = path.relative(baseDir, maybePath);
-  if (!relative) {
-    return false;
-  }
-  return (
-    relative.startsWith("..") ||
-    path.isAbsolute(relative) ||
-    relative.includes(`..${path.sep}`)
-  );
+function pathEqualsNormalized(a, b) {
+  return path.resolve(a).toLowerCase() === path.resolve(b).toLowerCase();
 }
 
 async function ensureDirectory(dirPath) {
@@ -317,18 +373,6 @@ function getKitInstallTargets(selectedKitIndexes, kits) {
   return urls;
 }
 
-function gitAvailable() {
-  const check = spawnSync("git", ["--version"], { encoding: "utf8" });
-  return check.status === 0;
-}
-
-function cloneRepository(url, destination) {
-  const result = spawnSync("git", ["clone", "--depth", "1", url, destination], {
-    encoding: "utf8"
-  });
-  return result;
-}
-
 function buildAgentConfigContent({
   agentName,
   projectRoot,
@@ -344,9 +388,9 @@ project_root: "${projectRoot.replace(/\\/g, "/")}"
 rules_root: "${rulesDirName}"
 rule_priority:
   - "MAP.md"
-  - "IDENTITY_SOUL.md"
   - "PROTOCOL.md"
   - "PROTOCOLS.md"
+  - "RULES.md"
   - "WORKFLOWS.md"
   - "CODE_STANDARDS.md"
 ---
@@ -357,12 +401,39 @@ Use this file as the single source of truth for agent identity and rule-loading 
 
 When a conversation starts with "Hey, AI" or "Hey, ${resolvedName}", load rules from \`${rulesDirName}\` in this priority:
 1. \`${rulesDirName}/MAP.md\`
-2. \`${rulesDirName}/IDENTITY_SOUL.md\` (if exists)
-3. \`${rulesDirName}/PROTOCOL.md\` (if exists)
-4. \`${rulesDirName}/PROTOCOLS.md\` (fallback)
+2. \`${rulesDirName}/PROTOCOL.md\` (if exists)
+3. \`${rulesDirName}/PROTOCOLS.md\` (fallback)
+4. \`${rulesDirName}/RULES.md\`
 5. \`${rulesDirName}/WORKFLOWS.md\` (if exists)
 6. \`${rulesDirName}/CODE_STANDARDS.md\` (if exists)
 `;
+}
+
+function buildRootAgentsBridgeContent(agentName, rulesDirName = HIDDEN_RULES_DIR) {
+  const resolvedName = agentName && agentName.trim() ? agentName.trim() : "AI";
+  return [
+    "<!-- HEYAI-RULE-BRIDGE:START -->",
+    "# HEYAI Rule Bridge",
+    "",
+    'When user message starts with "Hey, AI" or "Hey, ' + resolvedName + '":',
+    `1. Load \`${rulesDirName}/MAP.md\`.`,
+    `2. Load \`${rulesDirName}/PROTOCOLS.md\` (and \`${rulesDirName}/PROTOCOL.md\` if exists).`,
+    `3. Load \`${rulesDirName}/RULES.md\`.`,
+    `4. Load \`${rulesDirName}/WORKFLOWS.md\`.`,
+    "5. Reply by strictly following those rules and workflows.",
+    "",
+    "<!-- HEYAI-RULE-BRIDGE:END -->"
+  ].join("\n");
+}
+
+function upsertManagedBlock(originalText, startMarker, endMarker, block) {
+  const escapedStart = startMarker.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const escapedEnd = endMarker.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const regex = new RegExp(`${escapedStart}[\\s\\S]*?${escapedEnd}`, "m");
+  if (regex.test(originalText)) {
+    return originalText.replace(regex, block);
+  }
+  return `${originalText.trimEnd()}\n\n${block}\n`;
 }
 
 async function promptInput(rl, label, defaultValue = "") {
@@ -439,33 +510,17 @@ async function promptKitSelection(rl, kits, args, interactiveMode) {
 }
 
 async function resolveAgentConfigPath(rl, targetRoot, args, interactiveMode) {
-  const defaultPath = path.resolve(targetRoot, "..", AGENT_CONFIG_FILENAME);
-  const requested = args.agentConfigPath
-    ? path.resolve(args.agentConfigPath)
-    : defaultPath;
-
-  if (!interactiveMode) {
-    if (!pathIsOutside(targetRoot, requested)) {
-      throw new Error(
-        `Agent config path must be outside project root: ${requested}`
-      );
-    }
-    return requested;
+  const rootPath = path.join(targetRoot, AGENT_CONFIG_FILENAME);
+  if (!args.agentConfigPath) {
+    return rootPath;
   }
-
-  while (true) {
-    const answer = await promptInput(
-      rl,
-      `Nhap duong dan file ${AGENT_CONFIG_FILENAME} (bat buoc nam ngoai project root)`,
-      requested
+  const requested = path.resolve(args.agentConfigPath);
+  if (!pathEqualsNormalized(requested, rootPath)) {
+    throw new Error(
+      `${AGENT_CONFIG_FILENAME} must be created at project root: ${rootPath}`
     );
-    const resolved = path.resolve(answer);
-    if (!pathIsOutside(targetRoot, resolved)) {
-      logWarn("Duong dan phai nam ngoai project root. Vui long nhap lai.");
-      continue;
-    }
-    return resolved;
   }
+  return rootPath;
 }
 
 async function main() {
@@ -636,32 +691,30 @@ async function main() {
 
     const kitTargets = getKitInstallTargets(selectedKitIndexes, kits)
       .concat(customLinks.map((url) => ({ source: "Custom", url })));
-    const kitsRoot = path.join(rulesDir, "kits");
-    await ensureDirectory(kitsRoot);
     const installReport = [];
 
     if (kitTargets.length > 0) {
-      if (!gitAvailable()) {
-        logWarn("Khong tim thay git. Bo qua buoc clone kit tu GitHub.");
-        installReport.push("Git is not available. All kit installs were skipped.");
-      } else {
-        for (const target of kitTargets) {
-          const slug = sanitizeRepoSlug(target.url);
-          const dest = path.join(kitsRoot, slug);
-          if (fs.existsSync(dest)) {
-            installReport.push(`[SKIP] ${target.url} -> ${dest} (already exists)`);
-            continue;
-          }
-          logInfo(`Dang cai kit: ${target.url}`);
-          const clone = cloneRepository(target.url, dest);
-          if (clone.status === 0) {
-            installReport.push(`[OK] ${target.url} -> ${dest}`);
-          } else {
-            const err = clone.stderr || clone.stdout || "Unknown git error.";
-            installReport.push(`[FAIL] ${target.url} -> ${dest}\n${err}`);
-            logWarn(`Clone that bai: ${target.url}`);
-          }
+      for (const target of kitTargets) {
+        logInfo(`Dang xu ly kit: ${target.url}`);
+        const installCommand = await inferInstallCommandFromReadme(target.url);
+        if (!installCommand) {
+          installReport.push(
+            `[SKIP] ${target.url}\nNo install command detected from README. Please follow project instructions manually.`
+          );
+          continue;
         }
+
+        const run = runCommand(installCommand, targetRoot);
+        if (run.status === 0) {
+          installReport.push(`[OK] ${target.url}\nCommand: ${installCommand}`);
+          continue;
+        }
+
+        const err = run.stderr || run.stdout || "Unknown install error.";
+        installReport.push(
+          `[FAIL] ${target.url}\nCommand: ${installCommand}\n${err}`
+        );
+        logWarn(`Cai dat that bai cho kit: ${target.url}`);
       }
     } else {
       installReport.push("No kits selected for installation.");
@@ -701,11 +754,23 @@ async function main() {
       await fsp.writeFile(agentConfigPath, content, "utf8");
     }
 
+    const rootAgentsPath = path.join(targetRoot, "AGENTS.md");
+    const existingRootAgents = readTextIfExists(rootAgentsPath) || "";
+    const bridgeBlock = buildRootAgentsBridgeContent(agentName);
+    const nextRootAgents = upsertManagedBlock(
+      existingRootAgents || "# AGENTS\n",
+      "<!-- HEYAI-RULE-BRIDGE:START -->",
+      "<!-- HEYAI-RULE-BRIDGE:END -->",
+      bridgeBlock
+    );
+    await fsp.writeFile(rootAgentsPath, nextRootAgents, "utf8");
+
     logInfo("Hoan tat cai dat.");
     logInfo(`Rules: ${rulesDir}`);
     logInfo(`SYSTEM_DESIGN da cap nhat: ${destSystemDesignPath}`);
     logInfo(`Bao cao kit: ${installReportPath}`);
     logInfo(`Agent config: ${agentConfigPath}`);
+    logInfo(`Root AGENTS bridge: ${rootAgentsPath}`);
     logInfo(`Trigger greetings: "Hey, AI", "Hey, ${agentName}"`);
   } finally {
     if (rl) {

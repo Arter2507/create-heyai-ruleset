@@ -33,5 +33,4 @@ jobs:
             --non-interactive \
             --no-kits \
             --skip-design \
-            --agent-name HEYAI \
-            --agent-config-path ../HEYAI.agent.md
+            --agent-name HEYAI
