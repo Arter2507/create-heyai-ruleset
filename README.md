@@ -1,137 +1,92 @@
-# create-heyai-ruleset
+# @heyai-rules/heyai-ruleset 🤖
 
-CLI scaffolder để cài bộ quy tắc HEYAI vào dự án và chuẩn hoá cách Agent nạp rule.
-(CLI scaffolder to install the HEYAI ruleset into a project and standardize how Agents load rules.)
+**Bộ công cụ chuẩn hoá tri thức và quy tắc cho AI Agent trong dự án của bạn.**
+(A standardized toolkit for AI Agent knowledge and rules in your project.)
 
-[![CI](https://github.com/Arter2507/create-heyai-ruleset/actions/workflows/ci.yml/badge.svg)](https://github.com/Arter2507/create-heyai-ruleset/actions/workflows/ci.yml)
-[![npm version](https://img.shields.io/npm/v/create-heyai-ruleset.svg)](https://www.npmjs.com/package/@heyai-rules/heyai-ruleset)
+[![npm version](https://img.shields.io/npm/v/@heyai-rules/heyai-ruleset.svg)](https://www.npmjs.com/package/@heyai-rules/heyai-ruleset)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## 🎯 Mục tiêu / Objectives
+---
 
-- Cài nhanh bộ rule vào thư mục ẩn `.heyai-ruleset`. (Quickly install the ruleset into the hidden `.heyai-ruleset` folder.)
-- Cho phép chọn kit mặc định + kit GitHub tự nhập. (Allow choosing default kits + custom GitHub kits.)
-- Cho phép tuỳ biến Lightmode/Darkmode bằng text tự do. (Allow customizing Lightmode/Darkmode with free-form text.)
-- Tạo file `HEYAI.agent.md` ngay trong project root để quản lý tên Agent và cơ chế trigger. (Create a `HEYAI.agent.md` file in the project root to manage the Agent name and trigger mechanism.)
+## 🎯 Mục đích dự án / Project Purpose
 
-## 🚀 Tính năng chính / Key Features
+`heyai-ruleset` được thiết kế để giải quyết vấn đề "mất ngữ cảnh" và "thiếu nhất quán" khi làm việc với các AI Coding Assistant (như Cursor, GitHub Copilot, Gemini). 
+Công cụ này giúp bạn nhanh chóng cài đặt một bộ quy tắc (ruleset) chuẩn hoá, giúp AI hiểu sâu về project, tuân thủ đúng quy trình làm việc và giữ vững phong cách thiết kế của bạn.
 
-- **Hỗ trợ các lệnh tạo (Create Command Support)**:
-  - `npx @heyai-rules/heyai-ruleset@latest`
-  - `npm create @heyai-rules/heyai-ruleset@latest`
-  - `pnpm create @heyai-rules/heyai-ruleset`
-- **Prompt chọn kit từ `SYSTEM_DESIGN.md` (Kit selection from `SYSTEM_DESIGN.md`)**:
-  - Chọn nhiều mục (Select multiple items)
-  - Không cài thêm (Do not install more)
-  - Tự cài bằng nhiều link GitHub (ngăn cách `,`) (Manually install using multiple GitHub links, separated by `,`)
-- **Prompt cấu hình thiết kế (Design configuration prompt)**:
-  - Lightmode: màu sắc + theme (text) (Lightmode: color + theme (text))
-  - Darkmode: màu sắc + theme (text) (Darkmode: color + theme (text))
-  - Bỏ qua để giữ mặc định hiện có (Skip to keep existing defaults)
-- **Ghi override vào (Write overrides to) `.heyai-ruleset/SYSTEM_DESIGN.md`**.
-- **Cài kit theo lệnh hướng dẫn** trong README của từng GitHub project (ưu tiên `npx/pnpm dlx/npm create`), thay vì clone nguyên repo. (Install kits according to instructions in each project's README, favoring `npx/pnpm dlx/npm create` over cloning.)
-- **Sinh báo cáo cài đặt (Generate installation report)** tại `install-report.md` ở root dự án (đồng thời giữ bản legacy trong `.heyai-ruleset/install-report.md`). (Generate an installation report at `install-report.md` in the project root, while keeping a legacy version in `.heyai-ruleset/install-report.md`.)
+(`heyai-ruleset` is designed to solve the problem of "context loss" and "inconsistency" when working with AI Coding Assistants. It provides a standardized ruleset, helping the AI understand your project, follow workflows, and maintain your design style.)
 
-## 🤖 Cơ chế Agent / Agent Mechanism
+## ✨ Tính năng chính / Key Features
 
-Installer tạo `HEYAI.agent.md` trực tiếp tại project root. (The installer creates `HEYAI.agent.md` directly at the project root.)
+- **Cài đặt 1-Click (Scalable Scaffolder)**: Tự động khởi tạo bộ rule trong thư mục `.heyai-ruleset`.
+- **Hệ thống Kit linh hoạt (Flexible Kits)**: Chọn từ các bộ kit mặc định hoặc nạp bộ kit riêng từ GitHub.
+- **Tuỳ biến thẩm mỹ (Design Customization)**: Cấu hình nhanh giao diện (Light/Dark mode) cho AI ngay từ lúc cài đặt.
+- **Quản lý Agent (Agent Registry)**: Tạo file `HEYAI.agent.md` để AI tự nhận diện danh tính và cơ chế kích hoạt.
+- **Báo cáo cài đặt (Installation Reports)**: Theo dõi mọi thay đổi và các thư viện đã tích hợp.
 
-Thông tin trong file / Information in the file:
+## 🏗️ Kiến trúc quy tắc / Ruleset Architecture
 
-- `agent_name` (mặc định / default: `AI`)
-- **Activation greetings / Lời chào kích hoạt**:
-  - `Hey, AI`
-  - `Hey, <AgentName>`
-- **Thứ tự nạp rule ưu tiên trong (Rule loading priority in) `.heyai-ruleset`**:
-  1. `MAP.md`
-  2. `IDENTITY_SOUL.md`
-  3. `PROTOCOLS.md`
-  4. `RULES.md`
-  5. `WORKFLOWS.md`
-  6. `CODE_STANDARDS.md`
-  7. `SYSTEM_DESIGN.md`
+Hệ thống được tổ chức theo ma trận 7 nhóm tài liệu chính giúp AI nạp tri thức một cách logic:
+(The system is organized into 7 core document groups for logical knowledge loading:)
 
-## 💻 Cài đặt từ source / Installation from Source
+1.  **MAP**: Sơ đồ điều hướng và cấu trúc dự án. (Project navigation and structure.)
+2.  **IDENTITY & SOUL**: Nhân dạng, vai trò và triết lý của Agent. (Agent identity, roles, and philosophy.)
+3.  **PROTOCOLS**: Các quy tắc vận hành bất biến. (Immutable operational rules.)
+4.  **RULES**: Hiến chương và các quy ước bắt buộc. (Mandatory project rules and conventions.)
+5.  **WORKFLOWS**: Quy trình thực thu (PDCA) và xử lý nhiệm vụ. (Operational workflows and task handling.)
+6.  **CODE STANDARDS**: Tiêu chuẩn viết mã và ngôn ngữ lập trình. (Coding and language standards.)
+7.  **SYSTEM DESIGN**: Kiến trúc kỹ thuật và thẩm mỹ hệ thống. (Technical architecture and aesthetics.)
+
+## 🚀 Hướng dẫn nhanh / Quick Start
+
+Sử dụng trực tiếp qua NPM mà không cần cài đặt trước:
+(Use directly via NPM without prior installation:)
 
 ```bash
-npm install
-npm run check
+# Sử dụng npx (Khuyên dùng)
+npx @heyai-rules/heyai-ruleset@latest
+
+# Hoặc qua npm create
+npm create @heyai-rules/heyai-ruleset@latest
+
+# Hoặc qua pnpm create
+pnpm create @heyai-rules/heyai-ruleset
 ```
 
-Chạy trực tiếp CLI local / Run CLI locally:
+## 🎮 Cách sử dụng / Usage Guide
+
+### 1. Chế độ tương tác (Interactive Mode)
+Chỉ cần chạy lệnh trên, CLI sẽ dẫn dắt bạn qua các bước:
+- Chọn bộ quy tắc (Kits) phù hợp.
+- Thiết lập định hướng thẩm mỹ (Aesthetics).
+- Đặt tên cho Agent của bạn.
+
+### 2. Chế độ CI / Tự động (Non-interactive)
+Dành cho việc tích hợp vào script hoặc CI:
 
 ```bash
-node index.js /path/to/target-project
-```
-
-## 🎮 Chạy tương tác (interactive) / Run Interactively
-
-```bash
-node index.js ./my-project
-```
-
-CLI sẽ hỏi / The CLI will ask:
-
-- **B2**: chọn kit mặc định / không cài / tự cài link GitHub (Choose default kit / no install / manual GitHub links)
-- **B3**: nhập màu + theme cho Lightmode/Darkmode hoặc bỏ qua (Enter color + theme for Lightmode/Darkmode or skip)
-- **Tên Agent (Agent Name)**: `HEYAI.agent.md` sẽ được đặt tại project root (will be placed at the project root)
-
-## 🤖 Chạy CI (non-interactive) / Run in CI
-
-```bash
-node index.js ./demo \
-  --non-interactive \
-  --no-kits \
-  --skip-design \
-  --agent-name HEYAI
-```
-
-Ví dụ đầy đủ / Full example:
-
-```bash
-node index.js ./demo \
-  --non-interactive \
-  --kits 1,3 \
-  --custom-links https://github.com/org/a,https://github.com/org/b \
-  --configure-design \
-  --light-color "mau cam" \
-  --light-theme "aesthetics" \
-  --dark-color "xanh den" \
-  --dark-theme "cosmic" \
-  --agent-name "HEYAI" \
-  --overwrite-agent-config
+npx @heyai-rules/heyai-ruleset@latest --non-interactive --no-kits --agent-name MyAI
 ```
 
 ## 🛠️ Tuỳ chọn CLI / CLI Options
 
-```text
--y, --yes                     Use defaults and skip prompts
---non-interactive             Disable prompts (for CI)
--t, --target <path>           Target project root
---kits <indexes>              Default kit indexes, e.g. 1,3
---no-kits                     Skip all default kit installs
---custom-links <links>        Comma-separated GitHub links
---configure-design            Enable design overrides
---skip-design                 Keep existing design defaults
---light-color <text>          Lightmode color text
---light-theme <text>          Lightmode theme text
---dark-color <text>           Darkmode color text
---dark-theme <text>           Darkmode theme text
---agent-name <name>           Agent name (default: AI)
---agent-config-path <path>    Optional explicit path
---overwrite-agent-config      Overwrite agent config file if exists
--h, --help                    Show help
-```
+| Flag | Mô tả / Description |
+| :--- | :--- |
+| `-y, --yes` | Sử dụng mặc định và bỏ qua mọi câu hỏi. (Use defaults and skip prompts.) |
+| `--non-interactive` | Tắt chế độ hỏi đáp (Dùng cho CI). (Disable prompts for CI.) |
+| `-t, --target <path>` | Đường dẫn dự án đích. (Target project path.) |
+| `--kits <indexes>` | Chỉ định các kit theo số thứ tự (ví dụ: 1,2). (Specify kit indexes.) |
+| `--agent-name <name>` | Đặt tên nhân dạng cho AI (mặc định: AI). (Set Agent name.) |
+| `--overwrite` | Ghi đè cấu hình cũ nếu đã tồn tại. (Overwrite existing config.) |
 
-## 📦 Phát hành npm / npm Release
+## 🤖 Cơ chế Agent / Agent Mechanism
 
-Xem checklist: [RELEASE.md](./RELEASE.md) (Check the checklist in [RELEASE.md](./RELEASE.md))
+Sau khi cài đặt, file `HEYAI.agent.md` sẽ được tạo ở root dự án. AI sẽ tự động kích hoạt khi bạn sử dụng lời chào:
+(After installation, `HEYAI.agent.md` is created at the root. The AI triggers via:)
 
-## 🔄 Auto publish
+- `Hey, AI` hoặc `Hey, [AgentName]`
 
-- Chỉ dùng **1 kênh publish**: workflow `Publish npm` khi push tag `v*` (ví dụ `v0.1.3`). (Uses only one publish channel: the `Publish npm` workflow when pushing tag `v*`).
-- Workflow ưu tiên xác thực bằng **GitHub OIDC (npm trusted publishing)**. (Workflow prioritizes authentication via GitHub OIDC.)
-- Nếu OIDC chưa được cấu hình trên npm, workflow fallback sang `NPM_TOKEN`. (If OIDC is not configured on npm, the workflow falls back to `NPM_TOKEN`.)
+AI sẽ nạp các file trong `.heyai-ruleset/` theo thứ tự ưu tiên từ chiến lược đến kỹ thuật để hỗ trợ bạn tốt nhất.
 
 ---
 
-> **"Code with intent, build with soul."**
+> **"Orchestrating the technology of the future with discipline and soul."**
