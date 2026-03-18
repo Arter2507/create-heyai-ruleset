@@ -2,6 +2,9 @@
 
 CLI scaffolder để cài bộ quy tắc HEYAI vào dự án và chuẩn hoá cách Agent nạp rule.
 
+[![CI](https://github.com/Arter2507/create-heyai-ruleset/actions/workflows/ci.yml/badge.svg)](https://github.com/Arter2507/create-heyai-ruleset/actions/workflows/ci.yml)
+[![npm version](https://img.shields.io/npm/v/create-heyai-ruleset.svg)](https://www.npmjs.com/package/create-heyai-ruleset)
+
 ## Mục tiêu
 
 - Cài nhanh bộ rule vào thư mục ẩn `.heyai-ruleset`.
