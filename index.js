@@ -454,8 +454,8 @@ rule_priority:
 Use this file as the single source of truth for agent identity and rule-loading order.
 
 Language behavior:
-- Detect and use the user's primary language for all responses after trigger.
-- If language is unclear or mixed, ask the user to choose language first.
+- Detect and use the user's primary language for all responses after trigger ("choose language" if unclear).
+- Tự động nhận diện và sử dụng ngôn ngữ chính của người dùng (yêu cầu chọn nếu không rõ).
 
 When a conversation starts with "Hey, AI" or "Hey, ${resolvedName}", load rules from \`${rulesDirName}\` in this priority:
 1. \`${rulesDirName}/MAP.md\`
@@ -478,7 +478,7 @@ function buildRootAgentsBridgeContent(
     "# HEYAI Rule Bridge",
     "",
     'When user message starts with "Hey, AI" or "Hey, ' + resolvedName + '":',
-    "0. Detect user's primary language and respond in that language (`choose language` if unclear).",
+    "0. Detect user's primary language and respond in that language (nhận diện và phản hồi bằng ngôn ngữ chính của người dùng).",
     `1. Load \`${rulesDirName}/MAP.md\`.`,
     `2. Load \`${rulesDirName}/IDENTITY_SOUL.md\`.`,
     `3. Load \`${rulesDirName}/PROTOCOLS.md\`.`,

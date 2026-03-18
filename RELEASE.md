@@ -1,26 +1,19 @@
-# NPM Release Checklist
+# NPM Release Checklist / Danh sách Kiểm tra Phát hành
 
-## 1. Local preflight
+## 1. Local preflight / Kiểm tra nội bộ
 
 ```bash
 npm install
 npm run release:check
 ```
 
-`release:check` runs:
-- `node --check index.js`
-- `npm pack --dry-run`
-- `npm whoami`
-
-## 2. Version bump
+## 2. Version bump / Cập nhật phiên bản
 
 ```bash
 npm version patch
 ```
 
-Use `minor` or `major` when needed.
-
-## 3. Create and push tag (single publish channel)
+## 3. Push tag / Đẩy tag lên GitHub
 
 ```bash
 git push origin main
@@ -28,32 +21,16 @@ git tag vX.Y.Z
 git push origin vX.Y.Z
 ```
 
-This triggers GitHub Actions `Publish npm`.
+This triggers GitHub Actions `Publish npm`. (Thao tác này sẽ kích hoạt GitHub Actions `Publish npm`).
 
-## 4. Authentication in automation
+---
 
-Preferred: npm trusted publishing via GitHub OIDC.
+## 4. Authentication / Xác thực
 
-- In npm package settings, enable trusted publishing for this GitHub repository.
-- Workflow publishes with `npm publish --provenance --access public` using OIDC.
+Preferred: npm trusted publishing via GitHub OIDC. (Ưu tiên: npm trusted publishing qua GitHub OIDC).
+- Enable trusted publishing in npm settings for this GitHub repo. (Bật trusted publishing trong cài đặt npm cho repo này).
+- Workflow uses `npm publish --provenance`. (Workflow sử dụng `npm publish --provenance`).
 
-Fallback:
+---
 
-- Add `NPM_TOKEN` in GitHub repo secrets.
-- Workflow will use token-based publish if OIDC is not configured.
-
-## 5. Quick install validation
-
-```bash
-npx create-heyai-ruleset@latest --help
-```
-
-## 6. CI/non-interactive example
-
-```bash
-npx create-heyai-ruleset@latest ./demo \
-  --yes \
-  --no-kits \
-  --skip-design \
-  --agent-name AI
-```
+> **"Release often, release early."**
