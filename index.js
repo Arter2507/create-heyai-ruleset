@@ -897,3 +897,4 @@ main().catch((error) => {
   logError(error && error.message ? error.message : String(error));
   process.exitCode = 1;
 });
+// trigger fix
