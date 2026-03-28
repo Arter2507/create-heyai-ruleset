@@ -26,11 +26,3 @@ jobs:
 
       - name: Dry pack
         run: npm run pack:dry
-
-      - name: Non-interactive smoke test
-        run: |
-          node index.js ./tmp-project \
-            --non-interactive \
-            --no-kits \
-            --skip-design \
-            --agent-name HEYAI

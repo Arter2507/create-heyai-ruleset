@@ -1,47 +1,37 @@
 {
-  "name": "@heyai-rules/heyai-ruleset",
+  "name": "@heyai-rules/pilo-masterkit",
   "version": "1.2.1",
-  "description": "Scaffold and install HEYAI ruleset into a project.",
+  "description": "Scaffold and install PILO ruleset into a project.",
   "keywords": [
     "create",
     "cli",
     "ruleset",
     "agent"
   ],
-  "homepage": "https://github.com/Arter2507/create-heyai-ruleset#readme",
+  "homepage": "https://github.com/Arter2507/pilo-masterkit#readme",
   "bugs": {
-    "url": "https://github.com/Arter2507/create-heyai-ruleset/issues"
+    "url": "https://github.com/Arter2507/pilo-masterkit/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Arter2507/create-heyai-ruleset.git"
+    "url": "git+https://github.com/Arter2507/pilo-masterkit.git"
   },
   "license": "Apache-2.0",
   "author": "Arter",
   "type": "commonjs",
-  "main": "index.js",
+  "main": "src/bin/cli.js",
   "bin": {
-    "create-heyai-ruleset": "index.js"
+    "create-pilo-masterkit": "src/bin/cli.js"
   },
   "files": [
-    "index.js",
+    "src",
+    ".agent",
     "README.md",
     "RELEASE.md",
-    "scripts/release-check.js",
-    "CODE_STANDARDS.md",
-    "GIT_WORKFLOW.md",
-    "IDENTITY_SOUL.md",
-    "MAP.md",
-    "MEMORIES.md",
-    "PROTOCOLS.md",
-    "RULES.md",
-    "SECURITY.md",
-    "SYSTEM_DESIGN.md",
-    "TESTING_POLICY.md",
-    "WORKFLOWS.md"
+    "scripts/release-check.js"
   ],
   "scripts": {
-    "check": "node --check index.js",
+    "check": "node --check src/bin/cli.js",
     "pack:dry": "npm pack --dry-run",
     "release:check": "node scripts/release-check.js"
   },
@@ -80,5 +70,10 @@
         }
       ]
     ]
+  },
+  "dependencies": {
+    "@clack/prompts": "^1.1.0",
+    "fs-extra": "^11.3.4",
+    "picocolors": "^1.1.1"
   }
 }
