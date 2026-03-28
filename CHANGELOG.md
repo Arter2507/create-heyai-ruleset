@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/Arter2507/pilo-masterkit/compare/v1.2.2...v1.3.0) (2026-03-28)
+
+
+### Features
+
+* upgrade /clean-memory to Knowledge Distillation & Synthesis protocol ([859330f](https://github.com/Arter2507/pilo-masterkit/commit/859330f550939edddc8f0dd009c8e2ce0a9366c7))
+
 ## [1.2.1](https://github.com/Arter2507/create-heyai-ruleset/compare/v1.2.0...v1.2.1) (2026-03-18)
 
 
