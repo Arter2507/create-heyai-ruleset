@@ -43,3 +43,6 @@ yarn-error.log*
 install-report.md
 create-heyai-ruleset-*.tgz
 session_memory.md
+
+# Tasks & Local workflow
+task/

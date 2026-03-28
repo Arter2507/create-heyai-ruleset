@@ -1,103 +1,134 @@
-# @heyai-rules/heyai-ruleset 🤖
+<div align="center">
+  <img src="docs/assets/banner.png" alt="Pilo Masterkit Banner" width="100%">
 
-**Bộ công cụ chuẩn hoá tri thức và quy tắc cho AI Agent trong dự án của bạn.**
-(A standardized toolkit for AI Agent knowledge and rules in your project.)
+  # 🤖 Pilo Masterkit
+  
+  <p><b>The ultimate AI Coding Assistant standardizer and workspace initializer.</b></p>
+  
+  [![NPM version](https://img.shields.io/npm/v/@heyai-rules/pilo-masterkit.svg?style=for-the-badge&color=blue)](https://www.npmjs.com/package/@heyai-rules/pilo-masterkit)
+  [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg?style=for-the-badge)](https://opensource.org/licenses/Apache-2.0)
+  [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge)](http://makeapullrequest.com)
 
-[![npm version](https://img.shields.io/npm/v/@heyai-rules/heyai-ruleset.svg)](https://www.npmjs.com/package/@heyai-rules/heyai-ruleset)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
----
-
-## 🎯 Mục đích dự án / Project Purpose
-
-`heyai-ruleset` được thiết kế để giải quyết vấn đề "mất ngữ cảnh" và "thiếu nhất quán" khi làm việc với các AI Coding Assistant (như Cursor, GitHub Copilot, Gemini). 
-Công cụ này giúp bạn nhanh chóng cài đặt một bộ quy tắc (ruleset) chuẩn hoá, giúp AI hiểu sâu về project, tuân thủ đúng quy trình làm việc và giữ vững phong cách thiết kế của bạn.
-
-(`heyai-ruleset` is designed to solve the problem of "context loss" and "inconsistency" when working with AI Coding Assistants. It provides a standardized ruleset, helping the AI understand your project, follow workflows, and maintain your design style.)
-
-## ✨ Tính năng chính / Key Features
-
-- **Cài đặt 1-Click (Scalable Scaffolder)**: Tự động khởi tạo bộ rule trong thư mục `.heyai-ruleset`.
-- **Hệ thống Kit linh hoạt (Flexible Kits)**: Chọn từ các bộ kit mặc định hoặc nạp bộ kit riêng từ GitHub.
-- **Tuỳ biến thẩm mỹ (Design Customization)**: Cấu hình nhanh giao diện (Light/Dark mode) cho AI ngay từ lúc cài đặt.
-- **Quản lý Agent (Agent Registry)**: Tạo file `HEYAI.agent.md` để AI tự nhận diện danh tính và cơ chế kích hoạt.
-- **Báo cáo cài đặt (Installation Reports)**: Theo dõi mọi thay đổi và các thư viện đã tích hợp.
-
-## 🏗️ Kiến trúc quy tắc / Ruleset Architecture
-
-Hệ thống được tổ chức theo ma trận 7 nhóm tài liệu chính giúp AI nạp tri thức một cách logic:
-(The system is organized into 7 core document groups for logical knowledge loading:)
-
-1.  **MAP**: Sơ đồ điều hướng và cấu trúc dự án. (Project navigation and structure.)
-2.  **IDENTITY & SOUL**: Nhân dạng, vai trò và triết lý của Agent. (Agent identity, roles, and philosophy.)
-3.  **PROTOCOLS**: Các quy tắc vận hành bất biến. (Immutable operational rules.)
-4.  **RULES**: Hiến chương và các quy ước bắt buộc. (Mandatory project rules and conventions.)
-5.  **WORKFLOWS**: Quy trình thực thu (PDCA) và xử lý nhiệm vụ. (Operational workflows and task handling.)
-6.  **CODE STANDARDS**: Tiêu chuẩn viết mã và ngôn ngữ lập trình. (Coding and language standards.)
-7.  **SYSTEM DESIGN**: Kiến trúc kỹ thuật và thẩm mỹ hệ thống. (Technical architecture and aesthetics.)
-
-## 🚀 Hướng dẫn nhanh / Quick Start
-
-Sử dụng trực tiếp qua NPM mà không cần cài đặt trước:
-(Use directly via NPM without prior installation:)
-
-```bash
-# Sử dụng npx (Khuyên dùng)
-npx @heyai-rules/heyai-ruleset@latest
-
-# Hoặc qua npm create
-npm create @heyai-rules/heyai-ruleset@latest
-
-# Hoặc qua pnpm create
-pnpm create @heyai-rules/heyai-ruleset
-```
-
-## 🎮 Cách sử dụng / Usage Guide
-
-### 1. Chế độ tương tác (Interactive Mode)
-Chỉ cần chạy lệnh trên, CLI sẽ dẫn dắt bạn qua các bước:
-- Chọn bộ quy tắc (Kits) phù hợp.
-- Thiết lập định hướng thẩm mỹ (Aesthetics).
-- Đặt tên cho Agent của bạn.
-
-### 2. Chế độ CI / Tự động (Non-interactive)
-Dành cho việc tích hợp vào script hoặc CI:
-
-```bash
-npx @heyai-rules/heyai-ruleset@latest --non-interactive --no-kits --agent-name MyAI
-```
-
-## 🛠️ Tuỳ chọn CLI / CLI Options
-
-| Flag | Mô tả / Description |
-| :--- | :--- |
-| `-y, --yes` | Sử dụng mặc định và bỏ qua mọi câu hỏi. (Use defaults and skip prompts.) |
-| `--non-interactive` | Tắt chế độ hỏi đáp (Dùng cho CI). (Disable prompts for CI.) |
-| `-t, --target <path>` | Đường dẫn dự án đích. (Target project path.) |
-| `--kits <indexes>` | Chỉ định các kit theo số thứ tự (ví dụ: 1,2). (Specify kit indexes.) |
-| `--agent-name <name>` | Đặt tên nhân dạng cho AI (mặc định: AI). (Set Agent name.) |
-| `--overwrite` | Ghi đè cấu hình cũ nếu đã tồn tại. (Overwrite existing config.) |
-
-## 🤖 Cơ chế Agent / Agent Mechanism
-
-Sau khi cài đặt, file `HEYAI.agent.md` sẽ được tạo ở root dự án. AI sẽ tự động kích hoạt khi bạn sử dụng lời chào:
-(After installation, `HEYAI.agent.md` is created at the root. The AI triggers via:)
-
-- `Hey, AI` hoặc `Hey, [AgentName]`
-
-AI sẽ nạp các file trong `.heyai-ruleset/` theo thứ tự ưu tiên từ chiến lược đến kỹ thuật để hỗ trợ bạn tốt nhất.
+  [**English Version**](#english-version) | [**Phiên bản Tiếng Việt**](#phiên-bản-tiếng-việt)
+</div>
 
 ---
 
-## 🤝 Cộng đồng & Góp ý / Community & Contributing
+## 🌎 English Version
 
-Dự án này là mã nguồn mở và chúng tôi rất trân trọng mọi sự đóng góp từ cộng đồng. 
-(This project is open-source and we welcome all contributions.)
+### 🎯 Project Purpose
 
-- **[Hướng dẫn góp ý / Contributing Guide](CONTRIBUTING.md)**
-- **[Quy tắc ứng xử / Code of Conduct](CODE_OF_CONDUCT.md)**
-- **[Tài liệu chi tiết / Detailed Docs](docs/ARCHITECTURE.md)**
-- **[Báo cáo bảo mật / Security Policy](.github/SECURITY.md)**
+`Pilo Masterkit` is designed to transform an ordinary AI Coding Assistant into a disciplined **AI Task Force**. It acts as a comprehensive "brain" for your project, solving issues like context loss and inconsistent logic. It enforces a professional environment through standardized commands, strict development rules, and high-quality design systems.
+
+### ✨ Key Features
+
+- **Clean State Initiation**: Creates a completely empty directory structure (such as `docs/tasks`, `docs/plans`, etc.) ready for the AI to pick up work.
+- **Dynamic Context File**: Generates `GEMINI.md` based on your product's domain, defining the AI's identity, language protocol, and operational scale.
+- **Interactive CLI UI**: Start new projects friction-free via an interactive graphical CLI that prompts you through configuration options.
+- **High-End Specialist Modules**: Ensures the AI adheres to the latest practices covering Architecture, Clean Code, Security, and UI/UX.
+
+### 🏗️ Workflow Architecture
+
+```mermaid
+graph TD
+    A[Start: npx @heyai-rules/pilo-masterkit] --> B[Interactive CLI]
+    B --> C{Select Parameters}
+    C -->|Language| D[Language Identity]
+    C -->|Scale| E[Project Structure]
+    C -->|AI Name| F[Context Binding]
+    D & E & F --> G[Generate Workspace]
+    G --> H[AI Task Force Ready]
+```
+
+### 🚀 Quick Start
+
+Run the following command anywhere to initialize your workspace:
+
+```bash
+npx @heyai-rules/pilo-masterkit@latest
+```
+
+### 🎮 Slash Commands
+
+You have access to a rich set of built-in commands for your AI:
+
+#### **Core Utilities:**
+- `/plan` - Restate requirements, assess risks, and create step-by-step implementation plan.
+- `/status` - Display agent and project status.
+- `/tdd` - Strict Test-Driven Development protocol.
+- `/debug` - Systematic debugging methodology with root cause analysis.
+- `/e2e` - End-to-end testing with Playwright.
+
+#### **Development Capabilities:**
+- `/ui-ux-pro-max` - Plan and implement top-tier UI/UX.
+- `/enhance` - Add or update features in existing applications.
+- `/create` - Create new application functions.
+- `/deploy` - Deployment command for production releases.
+
+#### **Code Review & Quality:**
+- `/cpp-review`, `/rust-review`, `/go-review`, `/python-review`, `/kotlin-review` - Deep, language-specific code reviews focusing on idiomatic conventions and safety.
+
+<details>
+<summary><b>View ALL Available Commands</b></summary>
+
+`/aside`, `/brainstorm`, `/claw`, `/context-budget`, `/cpp-build`, `/cpp-review`, `/cpp-test`, `/create`, `/debug`, `/deploy`, `/devfleet`, `/docs`, `/e2e`, `/enhance`, `/evolve`, `/go-build`, `/go-review`, `/go-test`, `/gradle-build`, `/init-docs`, `/instinct-export`, `/instinct-import`, `/instinct-status`, `/kotlin-build`, `/kotlin-review`, `/kotlin-test`, `/learn-eval`, `/orchestrate`, `/plan`, `/preview`, `/projects`, `/promote`, `/prompt-optimize`, `/prune`, `/python-review`, `/resume-session`, `/rules-distill`, `/rust-build`, `/rust-review`, `/rust-test`, `/save-session`, `/sessions`, `/setup-pm`, `/skill-create`, `/skill-health`, `/status`, `/tdd`, `/test`, `/ui-ux-pro-max`.
+</details>
+
+---
+
+## 🇻🇳 Phiên bản Tiếng Việt
+
+### 🎯 Mục đích dự án
+
+`Pilo Masterkit` được thiết kế để biến một AI Coding Assistant thông thường thành một **Đội ngũ Đặc nhiệm AI (AI Task Force)** có kỷ luật. Công cụ này thiết lập "não bộ" tập trung ngay tại môi trường phát triển của bạn. Định hướng AI làm việc chuẩn quy trình và đạt đẳng cấp chất lượng mã nguồn cao.
+
+### ✨ Tính năng chính
+
+- **Môi trường Làm việc Sạch**: Tự động dọn dẹp và khởi tạo cấu trúc thư mục sẵn sàng làm việc.
+- **Tệp Cấu hình Động**: Trình cài đặt sinh ra file cấu trúc thông qua CLI theo ngữ cảnh dự án.
+- **Giao diện Cài đặt Tương tác**: Dễ dàng config CLI không cần các dòng lệnh dài dòng.
+- **Tri thức Chuyên gia (Skills)**: Ép buộc AI luôn tuân thủ các chuẩn mực gắt gao về Clean Code, Security và UI/UX Pro.
+
+### 🚀 Hướng dẫn nhanh
+
+Để cài đặt bộ khung quy tắc:
+
+```bash
+npx @heyai-rules/pilo-masterkit@latest
+```
+
+### 🎮 Lệnh Hệ Thống (Slash Commands)
+
+Sử dụng sức mạnh tự động hóa qua các lệnh slash cho AI Agent:
+
+#### **Quy trình Lõi:**
+- `/plan` - Lập kế hoạch chi tiết, đánh giá rủi ro trước khi thực thi.
+- `/status` - Kiểm tra trạng thái Agent và tiến độ công việc.
+- `/tdd` - Phát triển hướng kiểm thử (Test-Driven Development).
+- `/debug` - Chế độ tìm lỗi có hệ thống với bảng nguyên nhân gốc.
+
+#### **Phát triển Tính năng:**
+- `/ui-ux-pro-max` - Triển khai và tái hiện giao diện chuẩn mực.
+- `/enhance` - Nâng cấp tính năng hiện có.
+- `/create` - Khởi tạo luồng ứng dụng mới.
+- `/deploy` - Hỗ trợ chuẩn bị trước quá trình phát hành (release).
+
+#### **Review & Tối ưu Mã:**
+- `/cpp-review`, `/rust-review`, `/go-review`, `/python-review`, `/kotlin-review` - Review code sâu theo từng đặc thù ngôn ngữ nhằm đảm bảo an toàn bộ nhớ và hiệu suất.
+
+<details>
+<summary><b>Xem TOÀN BỘ lệnh (Available Commands)</b></summary>
+
+`/aside`, `/brainstorm`, `/claw`, `/context-budget`, `/cpp-build`, `/cpp-review`, `/cpp-test`, `/create`, `/debug`, `/deploy`, `/devfleet`, `/docs`, `/e2e`, `/enhance`, `/evolve`, `/go-build`, `/go-review`, `/go-test`, `/gradle-build`, `/init-docs`, `/instinct-export`, `/instinct-import`, `/instinct-status`, `/kotlin-build`, `/kotlin-review`, `/kotlin-test`, `/learn-eval`, `/orchestrate`, `/plan`, `/preview`, `/projects`, `/promote`, `/prompt-optimize`, `/prune`, `/python-review`, `/resume-session`, `/rules-distill`, `/rust-build`, `/rust-review`, `/rust-test`, `/save-session`, `/sessions`, `/setup-pm`, `/skill-create`, `/skill-health`, `/status`, `/tdd`, `/test`, `/ui-ux-pro-max`.
+</details>
+
+---
+
+## 🤝 Community & Contributing
+
+Dự án này là mã nguồn mở và chúng tôi vinh danh mọi đóng góp để cải thiện hệ sinh thái AI.  
+*This project is open-source and we welcome all contributions.*
+
 - **[Giấy phép / License](LICENSE)**
 
 ---
