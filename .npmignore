@@ -1,0 +1,28 @@
+# Tests and Coverage
+coverage/
+__tests__/
+*.test.js
+*.spec.js
+
+# Documentation & Workflows
+task/
+docs/
+.github/
+
+# IDE and Environment
+.vscode/
+.idea/
+*.log
+*.tgz
+*.swp
+.env*
+session_memory.md
+install-report.md
+
+# Config files not needed in production registry
+.eslintrc*
+.prettierrc*
+jest.config.js
+tsconfig.json
+.editorconfig
+.gitignore
