@@ -1,3 +1,13 @@
+# [3.0.0](https://github.com/Arter2507/pilo-masterkit/compare/v2.0.0...v3.0.0) (2026-04-03)
+
+
+* feat!(cli): official v2.1.0 release - fix npm publish 403 and update banner BREAKING CHANGE: Complete CLI overhaul with i18n support. ([f375197](https://github.com/Arter2507/pilo-masterkit/commit/f375197bfe65fc2d06f31a7da3547c018de27534))
+
+
+### BREAKING CHANGES
+
+* Complete CLI overhaul with i18n support.
+
 # [2.0.0](https://github.com/Arter2507/pilo-masterkit/compare/v1.2.3...v2.0.0) (2026-04-03)
 
 
