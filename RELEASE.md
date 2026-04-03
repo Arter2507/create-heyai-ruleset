@@ -1,36 +1,35 @@
-# NPM Release Checklist / Danh sách Kiểm tra Phát hành
+# 🚀 Pilo Masterkit - Version 2.1.0
 
-## 1. Local preflight / Kiểm tra nội bộ
+## 💎 Highlights
 
-```bash
-npm install
-npm run release:check
-```
+Phiên bản 2.1.0 là một bước tiến lớn trong trải nghiệm người dùng, mang lại sự linh hoạt tối đa cho các dự án đa ngôn ngữ và AI Host đa dạng.
 
-## 2. Version bump / Cập nhật phiên bản
+### 🍱 CLI UI/UX 2.0 (Pro Edition)
 
-```bash
-npm version patch
-```
+- **Banner ASCII Nghệ thuật**: Trải nghiệm khởi đầu phong cách Cyberpunk/Agentic.
+- **Quy trình Step-by-Step chuyên nghiệp**: Các giai đoạn `Mapping`, `Calibrating`, `Optimizing` được hiển thị- `/e2e` - End-to-end testing with Playwright.
 
-## 3. Push tag / Đẩy tag lên GitHub
+#### **Development Capabilities:**
+: Bảng tổng kết cấu hình rõ nét trước khi thực thi.
 
-```bash
-git push origin main
-git tag vX.Y.Z
-git push origin vX.Y.Z
-```
+### 🌐 Hỗ trợ Đa ngôn ngữ (Full i18n)
 
-This triggers GitHub Actions `Publish npm`. (Thao tác này sẽ kích hoạt GitHub Actions `Publish npm`).
+- **Primary Language Protocol**: Lựa chọn ngôn ngữ mẹ đẻ (Tiếng Việt hoặc Tiếng Anh) ngay từ bước đầu.
+- **Localized Context Files**: Các file `GEMINI.md`, `CLAUDE.md`, `AGENTS.md` giờ đây được tạo hoàn toàn bằng ngôn ngữ bạn đã chọn.
+- **Bilingual Interface**: Mọi câu hỏi, gợi ý và thông báo lỗi đều được bản địa hóa 100%.
+
+### 🏗️ Cấu hình Tùy biến Cao (Personalized Setup)
+
+- **Bổ sung Project Scope**: Phân loại quy mô dự án (Personal, Team, Enterprise).
+- **Phân loại Product Type**: Tối ưu hóa AI cho Web, API, Mobile, Library, hoặc Research.
+- **Agent Name Control**: Đặt tên định danh riêng cho Agent của bạn (Mặc định: **Pilo**).
+- **Trigger Protocol**: Giao thức kích hoạt (Hey Pilo, Chào Pilo...) linh hoạt theo ngôn ngữ.
+
+### 🧬 Cải tiến Kỹ thuật
+
+- **Multiselect Stack Support**: Cho phép chọn nhiều Stack kỹ thuật (Space to Select) cùng lúc.
+- **Dynamic Content Interpolation**: Tự động "tiêm" dữ liệu thực tế vào các file template.
+- **Surgical Cleanup**: Khởi tạo thư mục `docs/` sạch sẽ với 8 phân khu chuẩn mực.
 
 ---
-
-## 4. Authentication / Xác thực
-
-Preferred: npm trusted publishing via GitHub OIDC. (Ưu tiên: npm trusted publishing qua GitHub OIDC).
-- Enable trusted publishing in npm settings for this GitHub repo. (Bật trusted publishing trong cài đặt npm cho repo này).
-- Workflow uses `npm publish --provenance`. (Workflow sử dụng `npm publish --provenance`).
-
----
-
-> **"Release often, release early."**
+© 2026 Pilo Masterkit - Orchestrating the future with discipline and soul.

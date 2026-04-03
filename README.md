@@ -6,8 +6,8 @@
   <p><b>The ultimate AI Coding Assistant standardizer and workspace initializer.</b></p>
   
   [![NPM version](https://img.shields.io/npm/v/@heyai-rules/pilo-masterkit.svg?style=for-the-badge&color=blue)](https://www.npmjs.com/package/@heyai-rules/pilo-masterkit)
+  [![Latest Release](https://img.shields.io/badge/Release-v2.1.0-orange.svg?style=for-the-badge)](https://github.com/Arter2507/pilo-masterkit/releases/tag/v2.1.0)
   [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg?style=for-the-badge)](https://opensource.org/licenses/Apache-2.0)
-  [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge)](http://makeapullrequest.com)
 
   [**English Version**](#english-version) | [**Phiên bản Tiếng Việt**](#phiên-bản-tiếng-việt)
 </div>
@@ -22,10 +22,11 @@
 
 ### ✨ Key Features
 
-- **Clean State Initiation**: Creates a completely empty directory structure (such as `docs/tasks`, `docs/plans`, etc.) ready for the AI to pick up work.
-- **Dynamic Context File**: Generates `GEMINI.md` based on your product's domain, defining the AI's identity, language protocol, and operational scale.
-- **Interactive CLI UI**: Start new projects friction-free via an interactive graphical CLI that prompts you through configuration options.
-- **High-End Specialist Modules**: Ensures the AI adheres to the latest practices covering Architecture, Clean Code, Security, and UI/UX.
+- **Project Context Initializer**: Creates a clean directory structure (such as `docs/tasks`, `docs/plans`, etc.) ready for the AI.
+- **Dynamic Context File**: Generates `GEMINI.md`, `CLAUDE.md`, or `AGENTS.md` fully localized in your chosen language.
+- **Interactive CLI UI 2.0**: Start new projects friction-free via a stunning interactive graphical CLI with step-by-step progress.
+- **Personalized Agent Triggers**: Custom name (default: **Pilo**) and language-specific activation commands (Hey Pilo, Chào Pilo...).
+- **Specialist Modules**: Enforces latest practices for Architecture, Clean Code, Security, and UI/UX Pro Max.
 
 ### 🏗️ Workflow Architecture
 
@@ -45,8 +46,10 @@ graph TD
 Run the following command anywhere to initialize your workspace:
 
 ```bash
-npx @heyai-rules/pilo-masterkit@latest
+npx @heyai-rules/pilo-masterkit@latest init
 ```
+
+*Note: You can also use `--profile all` for or `--stack <name> --ai <host>` for non-interactive setup.*
 
 ### 🎮 Slash Commands
 
@@ -69,11 +72,9 @@ You have access to a rich set of built-in commands for your AI:
 #### **Code Review & Quality:**
 - `/cpp-review`, `/rust-review`, `/go-review`, `/python-review`, `/kotlin-review` - Deep, language-specific code reviews focusing on idiomatic conventions and safety.
 
-<details>
-<summary><b>View ALL Available Commands</b></summary>
+> [!IMPORTANT]
+> **View all commands**: For a complete list of 80+ specialized functions, check out our [**Slash Commands Wiki**](./SLASH_COMMANDS.md).
 
-`/aside`, `/brainstorm`, `/claw`, `/clean-memory`, `/context-budget`, `/cpp-build`, `/cpp-review`, `/cpp-test`, `/create`, `/debug`, `/deploy`, `/devfleet`, `/docs`, `/e2e`, `/enhance`, `/evolve`, `/go-build`, `/go-review`, `/go-test`, `/gradle-build`, `/init-docs`, `/instinct-export`, `/instinct-import`, `/instinct-status`, `/kotlin-build`, `/kotlin-review`, `/kotlin-test`, `/learn-eval`, `/orchestrate`, `/plan`, `/preview`, `/projects`, `/promote`, `/prompt-optimize`, `/prune`, `/python-review`, `/resume-session`, `/rules-distill`, `/rust-build`, `/rust-review`, `/rust-test`, `/save-session`, `/sessions`, `/setup-pm`, `/skill-create`, `/skill-health`, `/status`, `/tdd`, `/test`, `/ui-ux-pro-max`.
-</details>
 
 ---
 
@@ -85,18 +86,21 @@ You have access to a rich set of built-in commands for your AI:
 
 ### ✨ Tính năng chính
 
-- **Môi trường Làm việc Sạch**: Tự động dọn dẹp và khởi tạo cấu trúc thư mục sẵn sàng làm việc.
-- **Tệp Cấu hình Động**: Trình cài đặt sinh ra file cấu trúc thông qua CLI theo ngữ cảnh dự án.
-- **Giao diện Cài đặt Tương tác**: Dễ dàng config CLI không cần các dòng lệnh dài dòng.
-- **Tri thức Chuyên gia (Skills)**: Ép buộc AI luôn tuân thủ các chuẩn mực gắt gao về Clean Code, Security và UI/UX Pro.
+- **Môi trường Làm việc Sạch**: Tự động dọn dẹp và khởi tạo cấu trúc thư mục sẵn sàng làm việc (Docs, Tasks, Plans...).
+- **Tệp Cấu hình Động**: Sinh ra file `GEMINI.md`, `CLAUDE.md` hoặc `AGENTS.md` bản địa hóa 100% tiếng Việt.
+- **Giao diện CLI Tương tác 2.0**: Trải nghiệm khởi tạo chuyên nghiệp với bảng tổng kết và tiến độ trực quan.
+- **Cá nhân hóa Trigger**: Đặt tên AI Agent riêng (Mặc định: **Pilo**) và giao dịch ngôn ngữ mẹ đẻ (Hey Pilo, Chào Pilo...).
+- **Tri thức Chuyên gia (Skills)**: Bắt buộc AI tuân thủ Clean Code, Security và UI/UX Pro Max cao cấp.
 
 ### 🚀 Hướng dẫn nhanh
 
 Để cài đặt bộ khung quy tắc:
 
 ```bash
-npx @heyai-rules/pilo-masterkit@latest
+npx @heyai-rules/pilo-masterkit@latest init
 ```
+
+*Lưu ý: Có thể sử dụng `--profile all` để cài đặt đầy đủ hoặc `--stack <name> --ai <host>` để bỏ qua tương tác.*
 
 ### 🎮 Lệnh Hệ Thống (Slash Commands)
 
@@ -118,13 +122,11 @@ Sử dụng sức mạnh tự động hóa qua các lệnh slash cho AI Agent:
 #### **Review & Tối ưu Mã:**
 - `/cpp-review`, `/rust-review`, `/go-review`, `/python-review`, `/kotlin-review` - Review code sâu theo từng đặc thù ngôn ngữ nhằm đảm bảo an toàn bộ nhớ và hiệu suất.
 
-<details>
-<summary><b>Xem TOÀN BỘ lệnh (Available Commands)</b></summary>
-
-`/aside`, `/brainstorm`, `/claw`, `/clean-memory`, `/context-budget`, `/cpp-build`, `/cpp-review`, `/cpp-test`, `/create`, `/debug`, `/deploy`, `/devfleet`, `/docs`, `/e2e`, `/enhance`, `/evolve`, `/go-build`, `/go-review`, `/go-test`, `/gradle-build`, `/init-docs`, `/instinct-export`, `/instinct-import`, `/instinct-status`, `/kotlin-build`, `/kotlin-review`, `/kotlin-test`, `/learn-eval`, `/orchestrate`, `/plan`, `/preview`, `/projects`, `/promote`, `/prompt-optimize`, `/prune`, `/python-review`, `/resume-session`, `/rules-distill`, `/rust-build`, `/rust-review`, `/rust-test`, `/save-session`, `/sessions`, `/setup-pm`, `/skill-create`, `/skill-health`, `/status`, `/tdd`, `/test`, `/ui-ux-pro-max`.
-</details>
+> [!IMPORTANT]
+> **Toàn bộ hệ thống lệnh**: Để xem danh sách đầy đủ hơn 80 chức năng chuyên sâu, vui lòng truy cập tại [**Slash Commands Wiki**](./SLASH_COMMANDS.md).
 
 ---
+
 
 ## 🤝 Community & Contributing
 

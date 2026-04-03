@@ -1,6 +1,6 @@
 {
   "name": "@heyai-rules/pilo-masterkit",
-  "version": "1.2.3",
+  "version": "2.1.0",
   "description": "Scaffold and install PILO ruleset into a project.",
   "keywords": [
     "create",
@@ -21,6 +21,7 @@
   "type": "commonjs",
   "main": "src/bin/cli.js",
   "bin": {
+    "pilo-masterkit": "src/bin/cli.js",
     "create-pilo-masterkit": "src/bin/cli.js"
   },
   "files": [

@@ -41,7 +41,7 @@ function runStepCommandLine(label, commandLine) {
 }
 
 function main() {
-  runStep("Syntax check", "node", ["--check", "index.js"]);
+  runStep("Syntax check", "node", ["--check", "src/bin/cli.js"]);
   runStepCommandLine("Dry pack", "npm pack --dry-run");
   runStepCommandLine("Auth check (npm whoami)", "npm whoami");
   process.stdout.write("\n[OK] Release checks passed. Ready to publish.\n");
