@@ -41,6 +41,10 @@ graph TD
     G --> H[AI Task Force Ready]
 ```
 
+### 📸 Snapshot in Action
+
+![Pilo Masterkit CLI Snapshot - v2.1](docs/assets/cli_snapshot_v21.png)
+
 ### 🚀 Quick Start
 
 Run the following command anywhere to initialize your workspace:
