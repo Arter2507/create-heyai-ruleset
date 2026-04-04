@@ -1,12 +1,28 @@
 {
   "name": "@heyai-rules/pilo-masterkit",
   "version": "2.2.1",
-  "description": "Scaffold and install PILO ruleset into a project.",
+  "description": "The Ultimate AI Agent Scaffolding & Ruleset Orchestrator. Build standardized Agentic Workflows with bilingual (VI/EN) support, auto-Wiki & MCP-ready CLI.",
   "keywords": [
-    "create",
+    "ai-agents",
+    "agentic-workflows",
+    "multi-agent",
+    "mcp",
+    "llm-rules",
+    "scaffolding",
     "cli",
+    "bilingual-ai",
+    "standardization",
+    "automation",
+    "agentic",
+    "node-cli",
+    "pilo-masterkit",
+    "ai-native",
+    "developer-tools",
+    "productivity",
+    "vietnamese-ai",
+    "en-vi",
     "ruleset",
-    "agent"
+    "orchestration"
   ],
   "homepage": "https://github.com/Arter2507/pilo-masterkit#readme",
   "bugs": {
