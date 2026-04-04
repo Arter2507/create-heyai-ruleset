@@ -26,7 +26,7 @@ Những người duy trì dự án có trách nhiệm làm rõ các tiêu chuẩ
 (Project maintainers are responsible for clarifying the standards of acceptable behavior and taking fair corrective action.)
 
 ## Thực thi / Enforcement
-Các trường hợp hành vi lạm dụng, quấy rối hoặc không thể chấp nhận được khác có thể được báo cáo bằng cách liên hệ với nhóm dự án tại: **qtuong.257@gmail.com**.
+Các trường hợp hành vi lạm dụng, quấy rối hoặc không thể chấp nhận được khác có thể được báo cáo bằng cách liên hệ với nhóm dự án tại: **mailto:toquangtuong250703.it+pilo@gmail.com**.
 (Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting the project team.)
 
 ## Ghi nhận / Attribution
